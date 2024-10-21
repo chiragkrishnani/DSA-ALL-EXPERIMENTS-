@@ -1,0 +1,207 @@
+#include<stdio.h>
+#include<malloc.h>
+
+typedef struct node
+{
+    int data;
+    struct node *next;
+
+}NODE;
+NODE *start;
+int inser_beg(int x)
+{
+    NODE *p;
+    p = (NODE *)malloc(sizeof(NODE));
+    if(p==NULL)
+    {
+        printf("linklist is full");
+        return -1;
+    }
+    p->data = x;
+    p->next =NULL;
+
+    p->next = start;
+    p = start;
+    return 1;
+}
+int inser_end(int x)
+{
+    NODE *p,*ptr;
+    p = (NODE *)malloc(sizeof(NODE));
+    if(p==NULL)
+    {
+        printf("linklist is full");
+        return -1;
+    }
+    p->data = x;
+    p->next =NULL;
+    if(start == NULL)
+    {
+        start = p;
+    }
+    ptr = start;
+    while(ptr->next!=NULL)
+    {
+        ptr = ptr->next;
+
+    }
+    ptr->next = p;
+    return 1;
+}
+int insert_afer(int key,int x)
+{
+     NODE *p,*ptr;
+    p = (NODE *)malloc(sizeof(NODE));
+    if(p==NULL)
+    {
+        printf("linklist is full");
+        return -1;
+    }
+    p->data = x;
+    p->next =NULL;
+    ptr = start;
+    while(ptr->next !=NULL || ptr->data!=key)
+    {
+        ptr = ptr->next;
+    }
+    if(ptr == NULL){
+        printf("key not found");
+        return -1;
+    }
+    p->next = ptr->next;
+    ptr->next = p;
+    return 1;
+
+}
+int delete_beg()
+{
+    NODE *p;
+    int x;
+    if(start == NULL)
+    {
+        printf("linklist is empty");
+        return -1;
+
+    }
+    p = start;
+    start = start->next;
+    x = p->data;
+    free(p);
+    return x;
+}
+int delete_end()
+{
+    NODE *p,*prev;
+    int x;
+    p = start;
+    while(p->next!=NULL)
+    {
+        p = p->next;
+
+    }
+    if(p != start)
+    {
+         while(prev->next->next != NULL)
+        {
+            prev = prev->next;
+        }
+
+    }
+    if(p==start)
+    {
+        x = p->data;
+        free(p);
+        start = NULL;
+        return x;
+
+    }
+    prev->next = NULL;
+    x = p->data;
+    free(p);
+    return x;
+}
+int delete_after(int key)
+{
+    NODE *ptr;
+    ptr = start;
+    if(start==NULL)
+    {
+        return -1;
+    }
+    while(ptr->next !=NULL || ptr->data!=key)
+    {
+        ptr = ptr->next;
+    }
+    if(ptr == NULL)
+    {
+        printf("key not found");
+        return -1;
+
+    }
+
+}
+int main()
+{
+    int option,x,key;
+    do
+    {
+        printf("1.insert beginning\n");
+        printf("2.insert ending\n");
+        printf("3.insert after key\n");
+        printf("4.exit\n");
+        printf("Enter option from menu\n");
+        scanf("%d",&option);
+        if(option ==1)
+        {
+            printf("Enter data:\n");
+            scanf("%d",&x);
+            int res = inser_beg(x);
+            if(res == 1)
+            {
+                printf("data stored succesfully\n");
+            }
+            else
+            {
+                continue;
+            }
+
+        }
+        if(option == 2)
+        {
+            printf("Enter data:\n");
+            scanf("%d",&x);
+            int res = inser_end(x);
+            if(res == 1)
+            {
+                printf("data stored at end succesfully\n");
+            }
+            else
+            {
+                continue;
+            }
+
+
+        }
+        if(option == 3)
+        {
+             printf("Enter data:\n");
+            scanf("%d",&x);
+            printf("Enter key");
+            scanf("%d",&key);
+
+
+            int res = insert_afer(key,x);
+            if(res == 1)
+            {
+                printf("data stored at end succesfully\n");
+            }
+            else
+            {
+                continue;
+            }
+
+        }
+    }while(option!=4);
+}
+
+
